@@ -2,6 +2,7 @@
 #include "Contact.hpp"
 #include <iostream>
 #include <iomanip>
+#include <string>
 
 int		PhoneBook::get_index()
 {
@@ -54,6 +55,15 @@ void	display_line(int white_length, int index, std::string first_name, std::stri
 	std::cout << std::endl;
 }
 
+void	display_full_contact(std::string first_name, std::string last_name, std::string nickname, std::string phone_number, std::string darkest_secret)
+{
+	std::cout << "First name : " << first_name << std::endl;
+	std::cout << "Last name : " << last_name << std::endl;
+	std::cout << "Nickname : " << nickname << std::endl;
+	std::cout << "Phone number : " << phone_number << std::endl;
+	std::cout << "Darkest Secret : " << darkest_secret << std::endl;
+}
+
 void	PhoneBook::add_contact()
 {
 	_contacts[_index % 8].set_first_name(input_contact("First Name"));
@@ -67,10 +77,37 @@ void	PhoneBook::add_contact()
 
 void	PhoneBook::search_contact()
 {
-	std::cout << "|" << std::endl;
+	int				running = 1;
+	std::string		index_contact;
+	Contact			requested_contact;
+
 	init_line(10);
 	for (int i = 0; i < std::min(_index, 8); i++)
 	{
 		display_line(10, i, _contacts[i].get_first_name(), _contacts[i].get_last_name(), _contacts[i].get_nickname());
+	}
+	while (running)
+	{
+		std::cout << "Index : ";
+		if (!(std::getline(std::cin, index_contact)))
+		{
+			running = 0;
+			break ;
+		}
+		std::cout << std::endl;
+		if (std::cin.eof())
+		{
+			running = 0;
+			break ;
+		}
+		try
+		{
+			requested_contact = _contacts[std::stoi(index_contact)];
+		}
+		catch (std::invalid_argument)
+		{
+			std::cout << "Invalid argument" <<std::endl;
+		}
+		display_full_contact(requested_contact.get_first_name(), requested_contact.get_last_name(), requested_contact.get_nickname(), requested_contact.get_phone_number(), requested_contact.get_darkest_secret());
 	}
 }
