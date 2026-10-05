@@ -89,15 +89,12 @@ void	PhoneBook::search_contact()
 	while (running)
 	{
 		std::cout << "Index : ";
-		if (!(std::getline(std::cin, index_contact)))
-		{
-			running = 0;
-			break ;
-		}
+		std::getline(std::cin, index_contact);
 		std::cout << std::endl;
 		if (std::cin.eof())
 		{
 			running = 0;
+			std::cout << "Test";
 			break ;
 		}
 		try
