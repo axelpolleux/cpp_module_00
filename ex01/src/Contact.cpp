@@ -6,7 +6,7 @@ std::string input_contact(std::string message)
 {
 	std::string info;
 
-	while (info.empty())
+	while (std::cin && (info.empty()))
 	{
 		std::cout << message << " : ";
 		std::getline(std::cin, info);
