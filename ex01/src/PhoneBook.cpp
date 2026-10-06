@@ -107,15 +107,7 @@ void	PhoneBook::search_contact()
 			return ;
 		}
 		std::cout << std::endl;
-		try
-		{
-			index = std::stoi(index_contact);
-		}
-		catch (const std::exception &e)
-		{
-			std::cout << "Invalid argument : " << e.what() << std::endl;
-			continue ;
-		}
+		index = std::atoi(index_contact.c_str());
 		if (index < 0)
 		{
 			std::cout << "Negative value forbidden" << std::endl;
