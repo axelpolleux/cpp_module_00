@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <string>
+#include <cctype>
 
 int		PhoneBook::get_index()
 {
@@ -107,6 +108,18 @@ void	PhoneBook::search_contact()
 			return ;
 		}
 		std::cout << std::endl;
+		bool	valid = true;
+		for (int i = 0; index_contact[i]; i++)
+		{
+			if (!std::isdigit(index_contact[i]))
+			{
+				std::cout << "Only numbers are accepted" << std::endl;
+				valid = false;
+				break ;
+			}
+		}
+		if (!valid)
+			continue ;
 		index = std::atoi(index_contact.c_str());
 		if (index < 0)
 		{
