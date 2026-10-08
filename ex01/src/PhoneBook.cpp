@@ -88,9 +88,33 @@ void	PhoneBook::add_contact()
 	std::cout << "New contact added to the PhoneBook database" << std::endl;
 }
 
+bool	check_arg(std::string index_contact, int &res, int index)
+{
+	if (index_contact.empty())
+	{
+		std::cout << "Empty arguments are forbidden" << std::endl;
+		return false;
+	}
+	for (int i = 0; index_contact[i]; i++)
+	{
+		if (!std::isdigit(index_contact[i]))
+		{
+			std::cout << "Only numbers are accepted" << std::endl;
+			return false;
+		}
+	}
+	res = std::atoi(index_contact.c_str());
+	if (res >= std::min(index, 8))
+	{
+		std::cout << "Not found contact" << std::endl;
+		return false;
+	}
+	return true;
+}
+
 void	PhoneBook::search_contact()
 {
-	int				index;
+	int				index = 0;
 	std::string		index_contact;
 
 	init_line(10);
@@ -108,29 +132,11 @@ void	PhoneBook::search_contact()
 			return ;
 		}
 		std::cout << std::endl;
-		bool	valid = true;
-		for (int i = 0; index_contact[i]; i++)
-		{
-			if (!std::isdigit(index_contact[i]))
-			{
-				std::cout << "Only numbers are accepted" << std::endl;
-				valid = false;
-				break ;
-			}
-		}
+		bool	valid = check_arg(index_contact, index, _index);
+
 		if (!valid)
 			continue ;
-		index = std::atoi(index_contact.c_str());
-		if (index < 0)
-		{
-			std::cout << "Negative value forbidden" << std::endl;
-			continue ;
-		}
-		if (index >= std::min(_index, 8))
-		{
-			std::cout << "Not found contact" << std::endl;
-			continue ;
-		}
+
 		display_full_contact(_contacts[index].get_first_name(), _contacts[index].get_last_name(), _contacts[index].get_nickname(), _contacts[index].get_phone_number(), _contacts[index].get_darkest_secret());
 		return ;
 	}
